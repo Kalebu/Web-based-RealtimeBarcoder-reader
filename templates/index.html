@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realtime barcode reader</title>
+    <style>
+        #read_barcode{
+            align-self: center;
+            font-size: larger;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: aqua;
+            color: black;
+            border-radius: 20px;
+        }
+
+        #book_details{
+            font-family: fantasy;
+            font-size: medium;
+            background-color: blanchedalmond;
+            color: black;
+        }
+
+        .c_title{
+            visibility: hidden;
+        }
+    </style>
+
+    <script>
+           let reading_mode = false
+           let  reading_barcode = ()=>{
+                camera = document.getElementById("video_frame")
+                reader_button = document.getElementById("read_barcode")
+                video_elemets = document.getElementsByClassName("c_title")
+                book_details = document.getElementById("book_details")
+
+               if (reading_mode==false){
+                    camera.src = "{{url_for('video_frames')}}"
+                    reader_button.innerHTML = "Read Now "
+                    for (let index = 0; index<video_elemets.length; index++){
+                            video_elemets[index].style.visibility = "visible"
+                    }
+                    reading_mode = true
+               }
+               else{
+                    camera.src = ""  
+                    reader_button.innerHTML = "Read Barcode"
+                    book_details.innerHTML = "Barcode printed check it on your terminal " 
+                    reading_mode = false
+
+               }
+            }
+    </script>
+</head>
+
+<body>
+    <button  id = "read_barcode" onclick="reading_barcode()"> Read Barcode</button>
+    <br><br>
+    <h2 class = "c_title">Opening Camera</h2>
+    <img class="c_title" id ="video_frame" src="#">
+    <p id = "book_details"></p>
+</body>
+</html>
